@@ -112,8 +112,8 @@ $(function(){
           return layer.msg('用户名或者密码错误');
         }else if(item.username == username && item.password == password){
           localStorage.setItem('token','tokeninfo');
-          return layer.msg('登录成功');
           location.href = '/index.html';
+          return layer.msg('登录成功');
         }
       })
     }else{
