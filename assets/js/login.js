@@ -104,18 +104,33 @@ $(function(){
     let userinfo = JSON.parse(localStorage.getItem('userinfo'));
     let username = $('#form_login [name=username]').val();
     let password = $('#form_login [name=password]').val();
+    let items = null;
     if(userinfo){
       userinfo.forEach(item =>{
-        if(item.username != username){
+        if(item.username == username){
+          items = item
+          return
+        }
+      })
+      setTimeout(() => {
+        if(!items){
           return layer.msg('用户不存在');
-        }else if(item.password != password){
+        }
+        if(items.password != password){
           return layer.msg('用户名或者密码错误');
-        }else if(item.username == username && item.password == password){
+        }
+        if(items.username == username && items.password == password){
           localStorage.setItem('token','tokeninfo');
+          localStorage.setItem('info',JSON.stringify({
+            username:username,
+            nickname:username,
+            image:'',
+            email:username+'@qq.com'
+          }))
           location.href = '/index.html';
           return layer.msg('登录成功');
         }
-      })
+      }, 300);
     }else{
       return layer.msg('用户不存在');
     }
