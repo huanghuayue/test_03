@@ -18,6 +18,7 @@ $(function(){
   form.verify({
     // 自定义一个叫pwd的校验规则
     // 数组的方式检验规则
+    pwdlist:[/^[0-9a-zA-Z]{3,12}$/,'只能输入3-12位英文字符'],
     pwd:[/^[\S]{6,12}$/,'密码必须6-12位，且不能为空'],
     // 校验两次密码是否一致
     // 方法的方式检验规则
@@ -75,12 +76,20 @@ $(function(){
   // 本地注册和登录
   
   $('#zhuce').on('click',function(e){
+    let re = /^[0-9a-zA-Z]{3,12}$/;
     e.preventDefault();
     let userinfo = JSON.parse(localStorage.getItem('userinfo'));
     let infolist = [];
     let isShow = true;
     let username = $('#from_reg [name=username]').val();
     let password = $('#from_reg [name=password]').val();
+    let repassword = $('#from_reg [name=repassword]').val();
+    if(!re.test(username)){
+      return
+    }
+    if(password !== repassword){
+      return
+    }
     if(userinfo){
       infolist = userinfo;
       userinfo.forEach(item =>{
@@ -121,12 +130,15 @@ $(function(){
         }
         if(items.username == username && items.password == password){
           localStorage.setItem('token','tokeninfo');
-          localStorage.setItem('info',JSON.stringify({
-            username:username,
-            nickname:username,
-            image:'',
-            email:username+'@qq.com'
-          }))
+          localStorage.setItem('user',$('#form_login [name=username]').val())
+          if(!localStorage.getItem(username)){
+            localStorage.setItem('info',JSON.stringify({
+              username:username,
+              nickname:username,
+              image:'',
+              email:username+'@qq.com'
+            }))
+          }
           location.href = '/index.html';
           return layer.msg('登录成功');
         }
