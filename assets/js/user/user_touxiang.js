@@ -62,7 +62,6 @@ $(function () {
     //     })
     // })
     let user = localStorage.getItem('user');
-    let userinfo = JSON.parse(localStorage.getItem(user));
     $('#queding').on('click', function (e) {
         var dataURL = $image
         .cropper('getCroppedCanvas', {
@@ -71,8 +70,24 @@ $(function () {
             height: 100
         })
         .toDataURL('image/png')
-        userinfo.image = dataURL;
-        localStorage.setItem(user,JSON.stringify(userinfo));
-        window.parent.getUserInfo();// 调用父元素的更新用户方法
+        if(localStorage.getItem(user)){
+            let userinfo = JSON.parse(localStorage.getItem(user));
+            userinfo.image = dataURL;
+            localStorage.setItem(user,JSON.stringify(userinfo));
+            layer.msg("修改成功");
+            setTimeout(() => {
+                window.parent.indexs()
+            },1000);
+            window.parent.getUserInfo();// 调用父元素的更新用户方法
+        }else {
+            let userinfo = JSON.parse(localStorage.getItem('info'));
+            userinfo.image = dataURL;
+            localStorage.setItem(user,JSON.stringify(userinfo));
+            layer.msg("修改成功");
+            setTimeout(() => {
+                window.parent.indexs()
+            },1000);
+            window.parent.getUserInfo();// 调用父元素的更新用户方法
+        }
     })
 })

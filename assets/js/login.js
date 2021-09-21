@@ -1,4 +1,18 @@
 $(function(){
+  var dataList =[
+    {id:1,name:'最新',alias:'zuixin',is_delete:0},
+    {id:2,name:'科技',alias:'keji',is_delete:0},
+    {id:3,name:'股市',alias:'gushi',is_delete:0},
+    {id:4,name:'历史',alias:'lishi',is_delete:0},
+    {id:5,name:'情感',alias:'qinggan',is_delete:0},
+  ]
+  var dataAtricle = [
+    {id:1,title:'测试文章',pub_date:'2021-9-20 15:3:12',state:'已发布',cate_name:'最新',cover_img:'/assets/images/sample2.jpg',content:'<p>我是内容哦</p>'},
+    {id:2,title:'科技新闻',pub_date:'2021-09-20 15:57:12',state:'已发布',cate_name:'科技',cover_img:'/assets/images/sample2.jpg',content:'<p>我是内容哦</p>'},
+    {id:3,title:'股市新闻',pub_date:'2021-09-20 15:57:12',state:'已发布',cate_name:'股市',cover_img:'/assets/images/sample2.jpg',content:'<p>我是内容哦</p>'},
+    {id:4,title:'历史新闻',pub_date:'2021-09-20 15:57:12',state:'已发布',cate_name:'历史',cover_img:'/assets/images/sample2.jpg',content:'<p>我是内容哦</p>'},
+    {id:5,title:'情感新闻',pub_date:'2021-09-20 15:57:12',state:'已发布',cate_name:'情感',cover_img:'/assets/images/sample2.jpg',content:'<p>我是内容哦</p>'},
+  ]
   // 点击去注册
   $('#link_reg').on('click',function(){
     $('.login-box').hide();
@@ -139,6 +153,15 @@ $(function(){
               email:username+'@qq.com'
             }))
           }
+          // 文章类别
+          if(!localStorage.getItem($('#form_login [name=username]').val()+'List')){
+            localStorage.setItem($('#form_login [name=username]').val()+'List',JSON.stringify(dataList))
+          }
+          // 文章列表
+          if(!localStorage.getItem($('#form_login [name=username]').val()+'Atricle')){
+            localStorage.setItem($('#form_login [name=username]').val()+'Atricle',JSON.stringify(dataAtricle))
+          }
+
           location.href = '/index.html';
           return layer.msg('登录成功');
         }

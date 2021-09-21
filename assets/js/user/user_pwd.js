@@ -1,14 +1,24 @@
 $(function(){
     let password = JSON.parse(localStorage.getItem('userinfo'));
     let username = JSON.parse(localStorage.getItem('info'));
+    let user = localStorage.getItem('user');
+    let users = JSON.parse(localStorage.getItem(user))
     let userinfo = null;
     let jiumima = '';
     let form = layui.form;
     let layer = layui.layer;
+
     password.forEach(item =>{
-        if(username.username == item.username){
-            userinfo = item;
-            jiumima = item.password;
+        if(!users){
+            if(username.username == item.username){
+                userinfo = item;
+                jiumima = item.password;
+            }
+        }else{
+            if(users.username == item.username){
+                userinfo = item;
+                jiumima = item.password;
+            }
         }
     })
     // 验证规则
@@ -42,8 +52,14 @@ $(function(){
             return
         }
         password.forEach(item =>{
-            if(username.username == item.username){
-                item.password = $('.layui-form [name=nickname]').val()
+            if(!users){
+                if(username.username == item.username){
+                    item.password = $('.layui-form [name=nickname]').val()
+                }
+            }else{
+                if(users.username == item.username){
+                    item.password = $('.layui-form [name=nickname]').val()
+                }
             }
         })
         layer.msg("修改成功");

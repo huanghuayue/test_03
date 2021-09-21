@@ -15,7 +15,6 @@ function getUserInfo(){
         let textinfo = userinfo.nickname[0].toUpperCase();
         $('.text-avatar').html(textinfo)
         if(userinfo.image){
-            console.log("???")
             $('.layui-nav-img').show();
             $('.text-avatar').hide();
             $('.layui-nav-img').attr('src',userinfo.image)
